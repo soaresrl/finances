@@ -1,0 +1,11 @@
+.header {
+    grid-area: header;
+    height: 50px;
+
+    background-color: darkcyan;
+
+    display: flex;
+    justify-content: space-around;
+
+    box-shadow: 0 1px 1em rgb(122, 122, 122);
+  }

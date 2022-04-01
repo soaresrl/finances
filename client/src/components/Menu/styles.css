@@ -1,0 +1,76 @@
+.menu {
+    grid-area: menu;
+    display: block;
+
+    background-color: darkslategrey;
+
+    box-shadow: 1px 0 1em rgb(122, 122, 122);
+
+}
+
+.menu > li {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    list-style: none;
+    vertical-align: middle;
+    height: 30px;
+    margin-bottom: 3px;
+    padding-left: 10px;
+    cursor: pointer;
+    background-color: aquamarine;
+}
+
+.menu > li:hover {
+    box-shadow: inset 0 0 1em rgb(122, 122, 122);
+    padding-left: 16px;
+}
+
+.menu > a {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    list-style: none;
+    vertical-align: middle;
+    height: 30px;
+    margin-bottom: 3px;
+    padding-left: 10px;
+    cursor: pointer;
+    background-color: aquamarine;
+}
+
+.menu > a:hover {
+    box-shadow: inset 0 0 1em rgb(122, 122, 122);
+    padding-left: 16px;
+}
+
+@media (max-width: 600px){
+    .menu{
+        height: 30px;
+        overflow: hidden;
+    }
+
+    .menu > li {
+        text-align: center;
+        list-style: none;
+        vertical-align: middle;
+        height: 30px;
+        margin-bottom: 3px;
+        padding-left: 10px;
+        cursor: pointer;
+        background-color: aquamarine;
+    }
+
+    .menu > a {
+        text-align: center;
+        list-style: none;
+        vertical-align: middle;
+        height: 30px;
+        margin-bottom: 3px;
+        padding-left: 10px;
+        cursor: pointer;
+        background-color: aquamarine;
+    }
+  }
