@@ -6,8 +6,10 @@ export class FindAllIncomesController {
     constructor(private findAllIncomesUseCase: FindAllIncomesUseCase){}
 
     async handle(request: Request, response: Response){
+        const { userId } = request.body;
+
         try{
-            const incomes: IIncome[] = await this.findAllIncomesUseCase.execute();
+            const incomes: IIncome[] = await this.findAllIncomesUseCase.execute(userId);
 
             response.status(200).json(incomes);
         }catch(error){

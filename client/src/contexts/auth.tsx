@@ -10,6 +10,7 @@ interface AuthContextData {
     currentUser: IUser | null;
     signed: boolean;
     login(email: string, password: string): Promise<void>;
+    logout(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -52,8 +53,15 @@ export const AuthProvider = ({ user, children}: {user: any; children: any}) => {
         });
     }
 
+    function logout(){
+        localStorage.removeItem('userInfo');
+
+        setCurrentUser({});
+        setSigned(false);
+    }
+
     return(
-        <AuthContext.Provider value={{currentUser, signed, login}}>
+        <AuthContext.Provider value={{currentUser, signed, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

@@ -2,6 +2,7 @@ import { IExpense } from "../../models/interfaces/IExpense";
 
 export interface IExpenseRepository {
     findByName(name: String): Promise<IExpense[]>;
-    findAll(): Promise<IExpense[]>;
-    save(expense: IExpense): Promise<void>;
+    findAll(userId: string): Promise<IExpense[]>;
+    save(expense: IExpense): Promise<IExpense & {_id: any}>;
+    delete(id: any): Promise<void>;
 }

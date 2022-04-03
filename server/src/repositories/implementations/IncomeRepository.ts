@@ -9,15 +9,19 @@ export class IncomeRepository implements IIncomeRepository{
         return incomes;
     }
 
-    async findAll(): Promise<IIncome[]> {
-        const incomes: Array<IIncome> = await Income.find();
+    async findAll(userId: string): Promise<IIncome[]> {
+        const incomes: Array<IIncome> = await Income.find({userId});
 
         return incomes;
     }
 
-    async save(income: IIncome): Promise<void> {
+    async save(income: IIncome): Promise<IIncome & {_id: any}> {
         const incomeModel = new Income(income);
 
-        await incomeModel.save();
+        return await incomeModel.save();
+    }
+
+    async delete(id: string): Promise<void> {
+        await Income.deleteOne({ _id: id });
     }
 }

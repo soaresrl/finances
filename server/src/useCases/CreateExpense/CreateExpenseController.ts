@@ -6,14 +6,14 @@ export class CreateExpenseController {
     constructor(private createExpenseUseCase: CreateExpenseUseCase){}
 
     async handle(request: Request, response: Response){
-        const { name, value, date } = request.body;
+        const { userId, name, value, date } = request.body;
 
-        const expense: IExpense = {name, value, date} as IExpense;
+        const expense: IExpense = {name, value, date, userId} as IExpense;
 
         try{
-            await this.createExpenseUseCase.execute(expense);
-
-            response.status(200).json({msg: 'Expense created successfully.'});
+            await this.createExpenseUseCase.execute(userId, expense).then((expense: IExpense & {_id: any})=>{
+                response.status(200).json(expense);
+            });
         }catch(error){
             response.status(500).json({msg: 'Could not insert expense on database.'});
         }

@@ -4,4 +4,5 @@ export interface IExpense extends Document {
     name: string;
     value: number;
     date: Date;
+    userId: string;
 }

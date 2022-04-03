@@ -4,9 +4,9 @@ import { IExpenseRepository } from "../../repositories/interfaces/IExpenseReposi
 export class FindAllExpensesUseCase {
     constructor(private expenseRepository: IExpenseRepository){}
 
-    async execute(): Promise<IExpense[]> {
-        try{
-            const expenses: IExpense[] = await this.expenseRepository.findAll();
+    async execute(userId: string): Promise<IExpense[]> {
+        try{            
+            const expenses: IExpense[] = await this.expenseRepository.findAll(userId);
 
             return expenses;
         } catch(error){

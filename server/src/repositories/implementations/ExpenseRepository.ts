@@ -9,15 +9,19 @@ export class ExpenseRepository implements IExpenseRepository{
         return expenses;
     }
 
-    async findAll(): Promise<IExpense[]> {
-        const expenses: IExpense[] = await Expense.find({});
+    async findAll(userId: string): Promise<IExpense[]> {
+        const expenses: IExpense[] = await Expense.find({userId});
 
         return expenses;
     }
 
-    async save(expense: IExpense): Promise<void> {
+    async save(expense: IExpense): Promise<IExpense & {_id: any}> {
         const expenseModel = new Expense(expense);
 
-        await expenseModel.save();
+        return await expenseModel.save();
+    }
+
+    async delete(id: any): Promise<void> {
+        await Expense.deleteOne({ _id: id });
     }
 }

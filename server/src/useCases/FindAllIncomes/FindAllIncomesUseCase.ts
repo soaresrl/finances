@@ -4,9 +4,9 @@ import { IIncomeRepository } from "../../repositories/interfaces/IIncomeReposito
 export class FindAllIncomesUseCase {
     constructor(private incomeRepository: IIncomeRepository){}
 
-    async execute(): Promise<IIncome[]> {
+    async execute(userId: string): Promise<IIncome[]> {
         try{
-            const incomes: IIncome[] = await this.incomeRepository.findAll();
+            const incomes: IIncome[] = await this.incomeRepository.findAll(userId);
 
             return incomes;
         }catch(error){
