@@ -1,21 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './index.css';
+import 'antd/dist/antd.css'
 import App from './App';
-import Expenses from './pages/Expenses';
+import { AuthProvider } from './contexts/auth';
+import Loading from './components/Loading';
+import { LoadingProvider } from './contexts/useLoading';
 
 const container = document.getElementById('root')!;
 
 const root: ReactDOM.Root = ReactDOM.createRoot(container);
 
+const user = localStorage.getItem('userInfo');
+
 root.render(
-    <BrowserRouter>
-        <Routes>
-            <Route path='/' element={<App />}>
-                <Route path='/expenses' element={<Expenses />}/>
-            </Route>
-        </Routes>
-    </BrowserRouter>
+    <AuthProvider user={user}>
+        <LoadingProvider>
+            <>
+                <App />
+                <Loading />
+            </>
+        </LoadingProvider>
+    </AuthProvider>
 );

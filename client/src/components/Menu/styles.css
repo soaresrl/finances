@@ -2,10 +2,7 @@
     grid-area: menu;
     display: block;
 
-    background-color: darkslategrey;
-
-    box-shadow: 1px 0 1em rgb(122, 122, 122);
-
+    background-color: #C0C9CC;
 }
 
 .menu > li {
@@ -19,7 +16,8 @@
     margin-bottom: 3px;
     padding-left: 10px;
     cursor: pointer;
-    background-color: aquamarine;
+    background-color: #A39D92;
+    color: #F2F1F0;
 }
 
 .menu > li:hover {
@@ -38,7 +36,8 @@
     margin-bottom: 3px;
     padding-left: 10px;
     cursor: pointer;
-    background-color: aquamarine;
+    background-color: #A39D92;
+    color: #F2F1F0;
 }
 
 .menu > a:hover {
@@ -60,17 +59,23 @@
         margin-bottom: 3px;
         padding-left: 10px;
         cursor: pointer;
-        background-color: aquamarine;
+        background-color: #A39D92;
+        color: #F2F1F0;
     }
 
-    .menu > a {
+    .menu-modal {
+        padding: 30px;
+    }
+
+    .menu-modal > a {
         text-align: center;
+        display: block;
         list-style: none;
-        vertical-align: middle;
         height: 30px;
         margin-bottom: 3px;
         padding-left: 10px;
         cursor: pointer;
-        background-color: aquamarine;
+        background-color: #A39D92;
+        color: #F2F1F0;
     }
   }

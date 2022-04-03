@@ -1,9 +1,9 @@
-.expense-page {
+.income-page {
     padding: 20px;
     background-color: #F2F1F0;
 }
 
-.expense-page > .toolbar {
+.income-page > .toolbar {
     margin-bottom: 10px;
     display: flex;
     justify-content: flex-end;

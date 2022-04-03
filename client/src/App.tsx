@@ -1,18 +1,37 @@
 import React, { ReactElement } from 'react';
-import { Outlet } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header';
-import Menu from './components/Menu';
+import { useAuth } from './contexts/auth';
+import Expenses from './pages/Expenses';
+import Incomes from './pages/Incomes';
+import InSessionPage from './pages/InSessionPage';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
 
 const App: React.FC = (): ReactElement => {
-  return (
-    <div className='container'>
-      <Header />
-      <Menu />
-      <Outlet />
-      <div className='footer'> footer</div>
+  
+  const { signed } = useAuth();
 
-    </div>
+  return (
+    <BrowserRouter>
+      {
+        signed ?
+        (
+          <Routes>
+            <Route path='/' element={<InSessionPage />}>
+              <Route path='/expenses' element={<Expenses />}/>
+              <Route path='/incomes' element={<Incomes />}/>
+            </Route>
+          </Routes>
+        ) :
+        (
+          <Routes>
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/auth/login' element={<Login />} />
+          </Routes>
+        )
+      }
+    </BrowserRouter>
   );
 }
 

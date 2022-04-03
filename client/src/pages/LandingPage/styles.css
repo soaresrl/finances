@@ -1,0 +1,53 @@
+.landing-page {
+    display: grid;
+    grid-template-areas: 
+        "header header"
+        "page page"
+        "footer footer";
+
+    grid-template-rows: 50px calc(100vh - 80px) 30px;
+    grid-template-columns: 100vw;
+}
+
+.page {
+    grid-area: page;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    box-shadow: inset 0 0 0.5rem #636059;
+}
+
+.page > .login-container {
+    height: 200px;
+    width: 200px;
+    box-shadow: 0 0 0.5rem #636059;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.page > .signup-container {
+    height: 200px;
+    width: 200px;
+    box-shadow: 0 0 0.5rem #636059;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+@media (max-width: 600px){
+    .landing-page{
+        display: inline-block;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .page {
+        height: calc(100vh - 124px);
+        width: 100vw;
+        overflow: hidden;
+    }
+}

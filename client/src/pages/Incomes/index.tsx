@@ -7,16 +7,16 @@ import { useLoading } from '../../contexts/useLoading';
 
 import "./styles.css";
 
-interface IExpense {
+interface IIncome {
     _id: string;
     name: string;
     value: number;
     date: Date;
 }
 
-const Expenses: React.FC =  (): ReactElement => {
-  const [expenses, setExpenses] = useState<IExpense[]>([]);
-  const [draftExpense, setDraftExpense] = useState({});
+const Incomes: React.FC =  (): ReactElement => {
+  const [incomes, setIncomes] = useState<IIncome[]>([]);
+  const [draftIncome, setDraftIncome] = useState({});
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isValueFormatted, setIsValueFormatted] = useState<boolean>(true);
 
@@ -29,63 +29,64 @@ const Expenses: React.FC =  (): ReactElement => {
       headers: { 'Content-Type': 'application/json', 'authorization': currentUser?.token as string },
       body: JSON.stringify({userId: currentUser?.id})
     };
-    loading.start();
-    fetch('/expenses', requestOptions).then(response => response.json()).then(expenses => {
-      setExpenses(expenses)
-    }).finally(()=>{
-      loading.stop();
-    });
 
-    return(()=>setExpenses([]));
+    loading.start();
+
+    fetch('/incomes', requestOptions)
+      .then(response => response.json())
+      .then(incomes => setIncomes(incomes))
+      .finally(()=>{loading.stop()});
+
+    return(()=>setIncomes([]));
   }, [currentUser]);
 
   const dataSource = useMemo(() => {
-    const data = expenses.map((expense, index) => {
+    const data = incomes.map((income, index) => {
       return {
         key: index,
-        id: expense._id,
-        name: expense.name,
-        value: expense.value,
-        date: new Date(expense.date).toLocaleDateString('pt-BR')
+        id: income._id,
+        name: income.name,
+        value: income.value,
+        date: income.date
       }
     });
 
     return data;
-  }, [expenses]);
+  }, [incomes]);
 
-  function handleCreateExpense(){
+  function handleCreateIncome(){
     setIsModalVisible(true);
   }
 
-  function handleChangeDraftExpenseName(name: string){
-    setDraftExpense((expense: IExpense): IExpense => {
-      expense.name = name;
+  function handleChangeDraftIncomeName(name: string){
+    setDraftIncome((income: IIncome): IIncome => {
+        income.name = name;
 
-      return expense;
+      return income;
     });
   }
 
-  function handleChangeDraftExpenseValue(value: string){
+  function handleChangeDraftIncomeValue(value: string){
 
     const validFormat = value.match(/^\d+(\.\d{2})?$/);
     setIsValueFormatted(!!validFormat);
 
-    setDraftExpense((expense: IExpense): IExpense => {
-      expense.value = Number(value);
+    setDraftIncome((income: IIncome): IIncome => {
+        income.value = Number(value);
 
-      return expense;
+      return income;
     });
   }
 
-  function handleChangeDraftExpenseDate(date: string){
-    setDraftExpense((expense: IExpense): IExpense => {
-      expense.date = new Date(date);
+  function handleChangeDraftIncomeDate(date: string){
+    setDraftIncome((income: IIncome): IIncome => {
+        income.date = new Date(date);
 
-      return expense;
+      return income;
     });
   }
 
-  function handleDeleteExpense(record: any){
+  function handleDeleteIncome(record: any){
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'authorization': currentUser?.token as string },
@@ -94,9 +95,10 @@ const Expenses: React.FC =  (): ReactElement => {
 
     loading.start();
 
-    fetch('/expenses/delete', requestOptions).then(response => {
+    fetch('/incomes/delete', requestOptions).then(response => {
       return {status: response.status, msg: response.json()};
-    }).then((result) => {
+    })
+    .then((result) => {
       if(result.status === 200){
         const requestOptions = {
           method: 'POST',
@@ -104,12 +106,13 @@ const Expenses: React.FC =  (): ReactElement => {
           body: JSON.stringify({userId: currentUser?.id})
         };
 
-        fetch('/expenses', requestOptions).then(response => response.json()).then(expenses => setExpenses(expenses));
+        fetch('/incomes', requestOptions).then(response => response.json()).then(incomes => setIncomes(incomes));
       }
       else{
         console.log(result.msg);
       }
-    }).finally(()=>{
+    })
+    .finally(()=>{
       loading.stop();
     });
   }
@@ -122,7 +125,7 @@ const Expenses: React.FC =  (): ReactElement => {
 
   function handleCancel(){
 
-    setDraftExpense({});
+    setDraftIncome({});
 
     setIsModalVisible(false);
   }
@@ -131,28 +134,30 @@ const Expenses: React.FC =  (): ReactElement => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'authorization': currentUser?.token as string },
-      body: JSON.stringify({...draftExpense, userId: currentUser?.id})
+      body: JSON.stringify({...draftIncome, userId: currentUser?.id})
     };
 
     loading.start();
 
-    fetch('/expenses/create', requestOptions).then(response => {
+    fetch('/incomes/create', requestOptions).then(response => {
       return response.json();
-    }).then((result) => {
+    })
+    .then((result) => {
       if(!result.msg){
-        setExpenses([...expenses, result]);
+        setIncomes([...incomes, result]);
       }
-    }).finally(()=>{
+    })
+    .finally(()=>{
       loading.stop();
     });
   }
 
   return (
     <>
-      <div className='expense-page'>
+      <div className='income-page'>
         <div className='toolbar'>
           <Button icon={<AiOutlineFilter />}></Button>
-          <Button type='primary' onClick={handleCreateExpense}>Create new expense</Button>
+          <Button type='primary' onClick={handleCreateIncome}>Create new income</Button>
         </div>
         
         <Table dataSource={dataSource} pagination={{pageSize: 10}} scroll={{x: 400}}>
@@ -166,35 +171,35 @@ const Expenses: React.FC =  (): ReactElement => {
               <Space size="middle">
                 <a>Expand</a>
                 <a>Edit</a>
-                <a onClick={()=>handleDeleteExpense(record)}>Delete</a>
+                <a onClick={()=>handleDeleteIncome(record)}>Delete</a>
               </Space>
             )} 
           />
         </Table>
       </div>
-      <Modal title="Create new expense" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="Create new income" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <div className='modal-form'>
           <p>Name:</p>
           <Input 
             type='text' 
-            defaultValue={(draftExpense as IExpense).name}
-            placeholder='Insert expense name...' 
-            onChange={(e) => handleChangeDraftExpenseName(e.target.value)} />
+            defaultValue={(draftIncome as IIncome).name}
+            placeholder='Insert income name...' 
+            onChange={(e) => handleChangeDraftIncomeName(e.target.value)} />
           
           <p title='Formats accepted: 11; 11.11'>Value (R$):</p>
           <Input 
             type='number' 
-            defaultValue={(draftExpense as IExpense).value}
-            placeholder='Insert expense value...' 
-            onChange={(e) => handleChangeDraftExpenseValue(e.target.value)} 
+            defaultValue={(draftIncome as IIncome).value}
+            placeholder='Insert income value...' 
+            onChange={(e) => handleChangeDraftIncomeValue(e.target.value)} 
             status={!isValueFormatted ? 'error' : ''} />
           
           <p>Date:</p>
-          <Input type='date' defaultValue={(draftExpense as IExpense).date?.toString()} onChange={(e) => handleChangeDraftExpenseDate(e.target.value)}/>
+          <Input type='date' defaultValue={(draftIncome as IIncome).date?.toString()} onChange={(e) => handleChangeDraftIncomeDate(e.target.value)}/>
         </div>
       </Modal>
     </>
   );
 }
 
-export default Expenses;
+export default Incomes;

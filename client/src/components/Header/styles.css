@@ -1,11 +1,24 @@
 .header {
-    grid-area: header;
-    height: 50px;
+  grid-area: header;
+  height: 50px;
 
-    background-color: darkcyan;
+  background-color: #636059;
 
-    display: flex;
-    justify-content: space-around;
+  color: #F2F1F0;
 
-    box-shadow: 0 1px 1em rgb(122, 122, 122);
-  }
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.header > svg {
+  height: 30px;
+  width: 30px;
+}
+
+.account-dropdown{
+  cursor: pointer;
+}
