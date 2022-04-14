@@ -1,16 +1,23 @@
+import CategoryRepository from "../repositories/implementations/CategoryRepository";
 import { ExpenseRepository } from "../repositories/implementations/ExpenseRepository";
 import { IncomeRepository } from "../repositories/implementations/IncomeRepository";
 import UserRepository from "../repositories/implementations/UserRepository";
+import CreateCategoryController from "./CreateCategory/createCategoryController";
+import CreateCategoryUseCase from "./CreateCategory/createCategoryUseCase";
 import { CreateExpenseController } from "./CreateExpense/CreateExpenseController";
 import { CreateExpenseUseCase } from "./CreateExpense/CreateExpenseUseCase";
 import { CreateIncomeController } from "./CreateIncome/CreateIncomeController";
 import { CreateIncomeUseCase } from "./CreateIncome/CreateIncomeUseCase";
 import CreateUserController from "./CreateUser/CreateUserController";
 import CreateUserUseCase from "./CreateUser/CreateUserUseCase";
-import { DeleteExpenseController } from "./deleteExpense/deleteExpenseController";
-import { DeleteExpenseUseCase } from "./deleteExpense/deleteExpenseUseCase";
-import { DeleteIncomeController } from "./deleteIncome/deleteIncomeController";
-import { DeleteIncomeUseCase } from "./deleteIncome/deleteIncomeUseCase";
+import { DeleteExpenseController } from "./DeleteExpense/deleteExpenseController";
+import { DeleteExpenseUseCase } from "./DeleteExpense/deleteExpenseUseCase";
+import { DeleteIncomeController } from "./DeleteIncome/deleteIncomeController";
+import { DeleteIncomeUseCase } from "./DeleteIncome/deleteIncomeUseCase";
+import FilterExpensesByCategoryController from "./FilterExpensesByCategory/filterExpensesByCategoryController";
+import FilterExpensesByCategoryUseCase from "./FilterExpensesByCategory/filterExpensesByCategoryUseCase";
+import FindAllCategoriesController from "./FindAllCategories/findAllCategoriesController";
+import FindAllCategoriesUseCase from "./FindAllCategories/findAllCategoriesUseCase";
 import { FindAllExpensesController } from "./FindAllExpenses/FindAllExpensesController";
 import { FindAllExpensesUseCase } from "./FindAllExpenses/FindAllExpensesUseCase";
 import { FindAllIncomesController } from "./FindAllIncomes/FindAllIncomesController";
@@ -26,6 +33,7 @@ import FindUserUseCase from "./FindUser/FindUserUseCase";
 const expenseRepository = new ExpenseRepository();
 const userRepository = new UserRepository();
 const incomeRepository = new IncomeRepository();
+const categoryRepository = new CategoryRepository();
 
 // Expenses Use Cases and Controllers
 
@@ -44,6 +52,10 @@ const findAllExpensesController = new FindAllExpensesController(findAllExpensesU
 const deleteExpenseUseCase = new DeleteExpenseUseCase(userRepository, expenseRepository);
 
 const deleteExpenseController = new DeleteExpenseController(deleteExpenseUseCase);
+
+const filterExpenseByCategoryUseCase = new FilterExpensesByCategoryUseCase(expenseRepository);
+
+const filterExpenseByCategoryController = new FilterExpensesByCategoryController(filterExpenseByCategoryUseCase);
 
 // Incomes Use Cases and Controllers
 
@@ -73,16 +85,29 @@ const findUserUseCase = new FindUserUseCase(userRepository);
 
 const findUserController = new FindUserController(findUserUseCase);
   
+// Category Use Cases and Controllers
+
+const createCategoryUseCase = new CreateCategoryUseCase(categoryRepository);
+
+const createCategoryController = new CreateCategoryController(createCategoryUseCase);
+
+const findAllCategoriesUseCase = new FindAllCategoriesUseCase(categoryRepository);
+
+const findAllCategoriesController = new FindAllCategoriesController(findAllCategoriesUseCase);
+
 export { 
     createExpenseController, 
     findExpenseByNameController, 
     findAllExpensesController,
-    deleteExpenseController, 
+    deleteExpenseController,
+    filterExpenseByCategoryController,
     createIncomeController, 
     findIncomeByNameController,
     findAllIncomesController,
     deleteIncomeController,
     createUserController,
     findUserUseCase,
-    findUserController
+    findUserController,
+    createCategoryController,
+    findAllCategoriesController
 }

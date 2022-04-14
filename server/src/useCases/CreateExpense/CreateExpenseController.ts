@@ -6,9 +6,9 @@ export class CreateExpenseController {
     constructor(private createExpenseUseCase: CreateExpenseUseCase){}
 
     async handle(request: Request, response: Response){
-        const { userId, name, value, date } = request.body;
+        const { userId, name, category, value, date } = request.body;
 
-        const expense: IExpense = {name, value, date, userId} as IExpense;
+        const expense: IExpense = {name, value, category, date, userId} as IExpense;
 
         try{
             await this.createExpenseUseCase.execute(userId, expense).then((expense: IExpense & {_id: any})=>{

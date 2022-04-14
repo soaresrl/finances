@@ -15,6 +15,12 @@ export class ExpenseRepository implements IExpenseRepository{
         return expenses;
     }
 
+    async filterByCategory(userId:string, category: string): Promise<IExpense[]> {
+        const expenses: IExpense[] = await Expense.find({ userId, category });
+
+        return expenses;
+    }
+
     async save(expense: IExpense): Promise<IExpense & {_id: any}> {
         const expenseModel = new Expense(expense);
 

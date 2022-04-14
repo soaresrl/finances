@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { createExpenseController, createIncomeController, createUserController, deleteExpenseController, deleteIncomeController, findAllExpensesController, findAllIncomesController, findExpenseByNameController, findIncomeByNameController, findUserController, findUserUseCase } from "./useCases";
+import { createCategoryController, createExpenseController, createIncomeController, createUserController, deleteExpenseController, deleteIncomeController, filterExpenseByCategoryController, findAllCategoriesController, findAllExpensesController, findAllIncomesController, findExpenseByNameController, findIncomeByNameController, findUserController, findUserUseCase } from "./useCases";
 
 dotenv.config({ path: __dirname+'/.env' });
 
@@ -56,6 +56,10 @@ app.post('/expenses/delete', checkToken, async (req, res)=>{
     return deleteExpenseController.handle(req, res);
 });
 
+app.post('/expenses/filterByCategory', checkToken, async (req, res)=>{
+    return filterExpenseByCategoryController.handle(req, res);
+});
+
 // Incomes routes
 
 app.post('/incomes', checkToken, async (req, res) => {
@@ -72,6 +76,16 @@ app.post('/incomes/create', checkToken, async (req, res)=>{
 
 app.post('/incomes/delete', checkToken, async (req, res)=>{
     return deleteIncomeController.handle(req, res);
+});
+
+// Categories routes
+
+app.post('/categories/create', checkToken, async (req, res)=>{
+    return createCategoryController.handle(req, res);
+});
+
+app.post('/categories', checkToken, async (req, res)=>{
+    return findAllCategoriesController.handle(req, res);
 });
 
 // Auth routes
